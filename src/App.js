@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Layout from './components/Layout';
+import { Switch, Route } from 'react-router-dom';
+import Home from './components/Home';
+import PostsContainer from './components/PostsContainer';
+import CreatePost from './components/CreatePost';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+export default class App extends Component {
+    state = {
+        loggedIn: true,
+    }
+
+    log = () => { console.log("Invoked"); }
+
+	render () {
+		return (
+		<Layout>
+            <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route path="/posts" component={PostsContainer}/>
+                <Route path="/create" render={props => {
+                    return <CreatePost {...props} log={this.log}/>
+                }}/>
+                
+            </Switch>
+		</Layout>
+		)
+	}
 }
-
-export default App;
